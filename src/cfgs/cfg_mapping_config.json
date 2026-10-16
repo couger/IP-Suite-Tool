@@ -1,0 +1,17 @@
+{
+    "ip_address": "ip_component",
+    "ip_type": "ip_type_component",
+    "network_address": "network_component",
+    "broadcast_address": "broadcast_component",
+    "subnet_mask": "mask_DDN_component",
+    "wildcard_mask": "wildcard_component",
+    "cidr_notation": "cidr_component",
+    "first_host_ip": "first_ip_component",
+    "last_host_ip": "last_ip_component",
+    "available_host_count": "available_count_component",
+    "possible_subnet_count": "available_subnet_component",
+    "subnet_position_index": "subnet_order_component",
+    "host_index_in_subnet": "ip_order_component",
+    "address_family_bit_length": "address_family_bit_length_component",
+    "mask_length": "mask_length_component"
+}
