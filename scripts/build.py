@@ -33,6 +33,10 @@ def main():
         return
     if importlib.util.find_spec("PyInstaller") is None:
         parser.error("Install build dependencies: python -m pip install -r requirements-dev.txt")
+    try:
+        import xlrd  # noqa: F401 - validate .xls support in the build interpreter
+    except ImportError:
+        parser.error("Missing xlrd (.xls support): python -m pip install -r requirements-dev.txt")
     environment = os.environ.copy()
     environment["IP_SUITE_BUILD_MODE"] = args.mode
     subprocess.run(command, cwd=ROOT, env=environment, check=True)
@@ -42,6 +46,10 @@ def main():
         executable = args.output_dir.resolve() / name / executable.name
     if not executable.is_file():
         raise FileNotFoundError("Build finished without the expected executable")
+    from PyInstaller.archive.readers import CArchiveReader
+    archive = CArchiveReader(str(executable)).open_embedded_archive("PYZ.pyz")
+    if not {"xlrd", "xlrd.book", "xlrd.sheet"}.issubset(archive.toc):
+        raise RuntimeError("Build is missing the packaged xlrd .xls reader")
     if args.mode == "release":
         subprocess.run([sys.executable, str(checker), "--binary", str(executable)], cwd=ROOT, check=True)
     print(f"Built: {executable}")

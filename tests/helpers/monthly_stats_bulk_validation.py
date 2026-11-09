@@ -37,10 +37,10 @@ def load_target_files() -> list[str]:
 
 def validate_work_stats(files: list[str]) -> dict:
     stats = object.__new__(WorkStats)
-    records = [WorkStats._read_record(stats, index, path) for index, path in enumerate(files, 1)]
+    records = stats._collect_records(files)
 
     failed = [record for record in records if record.status != "\u6210\u529f"]
-    missing_filename = [record.source_file for record in records if not (record.prefix or record.title)]
+    missing_filename = [record.source_file for record in records if not record.prefix]
     missing_people = [
         record.source_file
         for record in records
@@ -54,11 +54,10 @@ def validate_work_stats(files: list[str]) -> dict:
     workbook = load_workbook(output_path, read_only=True, data_only=True)
     try:
         sheet = workbook.active
-        row_count = sheet.max_row - 1
         source_paths = [
-            sheet.cell(row=row_index, column=7).value
-            for row_index in range(2, sheet.max_row + 1)
+            row[0] for row in sheet.iter_rows(min_row=2, min_col=7, max_col=7, values_only=True)
         ]
+        row_count = len(source_paths)
     finally:
         workbook.close()
 

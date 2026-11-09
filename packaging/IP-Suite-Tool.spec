@@ -27,7 +27,7 @@ EXCLUDES = [
 a = Analysis(
     [str(SOURCE / 'main.py')],
     pathex=[str(SOURCE)], binaries=[], datas=DATAS,
-    hiddenimports=['ipaddress', 'json', 'threading', 'logging'],
+    hiddenimports=['ipaddress', 'json', 'threading', 'logging', 'xlrd'],
     hookspath=[str(PROJECT_ROOT / 'packaging/hooks')],
     hooksconfig={}, runtime_hooks=[], excludes=EXCLUDES, noarchive=False,
 )
