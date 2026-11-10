@@ -91,11 +91,11 @@ def test_colliding_aliases_are_rejected(tmp_path):
 
 
 def test_runtime_state_and_frozen_resources_are_separate(tmp_path, monkeypatch):
+    monkeypatch.setattr("sys._MEIPASS", str(tmp_path / "unpacked"), raising=False)
     monkeypatch.setenv("IP_SUITE_DATA_DIR", str(tmp_path / "private-state"))
     path = config_path("prefixes.json")
     assert path.parent == tmp_path / "private-state/cfgs"
-    assert not path.is_relative_to(ROOT)
-    monkeypatch.setattr("sys._MEIPASS", str(tmp_path / "unpacked"), raising=False)
+    assert not path.is_relative_to(resource_path())
     assert resource_path("defaults", "prefixes.json") == tmp_path / "unpacked/defaults/prefixes.json"
 
 

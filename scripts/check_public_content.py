@@ -25,7 +25,7 @@ EXAMPLE_SCHEMAS = {
     "allocations.xlsx": ("记录编号", "位置", "资源标识", "业务类别", "IPv4地址", "IPv6地址", "网关", "掩码", "组织", "联系人"),
 }
 ALLOWED_CONFIG = {"src/cfgs/cfg_mapping_config.json"}
-EXCLUDED = {".git", ".venv", "venv", "__pycache__", ".pytest_cache", "build", "build-clean", "dist", "bin", "node_modules", "test_outputs", "data", "runtime"}
+EXCLUDED = {".git", ".python", ".venv", "venv", "__pycache__", ".pytest_cache", "build", "build-clean", "dist", "bin", "node_modules", "test_outputs", "data", "runtime"}
 PRIVATE_PATH = re.compile(r"(?i)[a-z]:[/\\](?:users|dev|工作)[/\\]")
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\.[A-Za-z]{2,})")
 

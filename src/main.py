@@ -4,13 +4,18 @@ import logging
 import os
 import sys
 import traceback
-import tkinter as tk
-from tkinter import ttk
 
 # 添加项目根目录到Python路径（避免重复添加）
 _current_dir = os.path.dirname(os.path.abspath(__file__))
 if _current_dir not in sys.path:
     sys.path.insert(0, _current_dir)
+
+from utils.app_paths import configure_frozen_tk_paths
+
+configure_frozen_tk_paths()
+
+import tkinter as tk
+from tkinter import ttk
 
 # 统一使用日志配置模块
 try:

@@ -203,6 +203,7 @@ package-lock.json
 yarn.lock
 
 # Private runtime data and original business documents must never be committed.
+.python/
 legacy/
 build-clean/
 data/

@@ -24,6 +24,16 @@ python -m pip install -r requirements.txt
 python src/main.py
 ```
 
+本机 D 盘独立环境位于 `.python/runtime`，包含 Python 3.13、Tcl/Tk 和项目依赖。Windows 可通过下列入口使用，避免调用其他项目或商店版的 Python；运行库、下载缓存和构建临时文件均留在项目所在盘，不修改系统 PATH。
+
+```powershell
+.\scripts\python.ps1 src/main.py
+.\scripts\python.ps1 -m pytest -q
+.\scripts\python.ps1 scripts/build.py
+```
+
+`.python/` 为本地忽略目录，不随源码分发。此入口会显式设置 Tcl/Tk 路径，并在退出后恢复调用方环境变量。
+
 在 IP 申请页面依次选择 `examples/network_plan.xlsx`（规划）、`examples/allocations.xlsx`（总表）和 `examples/requests.xlsx`（申请）；图片由使用者自行选择测试图片。开始工作统计前必须单选 `add`、`pl` 或 `ts`。程序保留所选类型已有的有效编号，跳过其他前缀；无前缀或所选类型缺少有效编号的文件，按本地创建日期生成「所选前缀 + 年月日 + 四位流水号」。流水号每天从 `0001` 起，跳过本次统计中已有的同日编号，不修改源文件名。无法读取创建日期时标记失败，不以修改日期代替。
 
 工作统计识别和显示时移除文件名空格及 `【用户上传的策略申请文件】`。仅有 `pl` 和数字的文件，其剩余部分显示为「不明确」。导入目录会额外统计以有效 `plYYYYMMDDNNNN` 命名的子目录，显示为「文件夹对象」且不插入附件，其中文件仍按原规则统计。Excel 输出包含「工作统计」和「失败项目」两张表，均冻结首行。

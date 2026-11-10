@@ -410,8 +410,8 @@ class IPConverter(CoreIPConverter):
         state_disable = "disabled" if is_checked else "normal"
         state_enable = "normal" if is_checked else "disabled"
 
-        bg_color_disable = self.DISABLED_BG_COLOR if is_checked else "white"
-        bg_color_enable = "white" if is_checked else self.DISABLED_BG_COLOR
+        bg_color_disable = Colors.BG_DISABLED if is_checked else Colors.BG_WHITE
+        bg_color_enable = Colors.BG_WHITE if is_checked else Colors.BG_DISABLED
 
         self.ipv6_entry.config(state=state_disable)
         self.instance_combobox_state = "disabled" if is_checked else "readonly"

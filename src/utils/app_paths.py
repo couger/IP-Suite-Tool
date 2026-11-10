@@ -29,3 +29,17 @@ def config_path(name: str) -> Path:
 def resource_path(*parts: str) -> Path:
     base = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[1]))
     return base.joinpath(*parts)
+
+
+def configure_frozen_tk_paths() -> None:
+    """Keep Windows Tcl/Tk from renormalizing the bundled library paths."""
+    if sys.platform != "win32" or not getattr(sys, "frozen", False):
+        return
+    for variable, folder in (("TCL_LIBRARY", "_tcl_data"), ("TK_LIBRARY", "_tk_data")):
+        directory = resource_path(folder)
+        if not directory.is_dir():
+            continue
+        value = str(directory)
+        if not value.startswith("\\\\?\\"):
+            value = "\\\\?\\UNC\\" + value[2:] if value.startswith("\\\\") else "\\\\?\\" + value
+        os.environ[variable] = value
